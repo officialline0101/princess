@@ -249,7 +249,7 @@
             // LINEトークにメッセージを送信
             liff.sendMessages([{
                 type: 'text',
-                text: `【予約フォーム】\nお名前：${formData.name}\n電話番号：${formData.phone}\nメニュー：${formData.selectedSymptom}${formData.visitCount}\nネイル：【${formData.visitCount}】\n希望日時：\n ${formData.dates[0]}\n${formData.dates[1]}\n${formData.dates[2]}\nメッセージ：${formData.message}`
+                text: `【予約フォーム】\nお名前：${formData.name}\n電話番号：${formData.phone}\nコース：${formData.selectedSymptom}${formData.visitCount}\nネイル：【${formData.visitCount}】\n希望日時：\n ${formData.dates[0]}\n${formData.dates[1]}\n${formData.dates[2]}\nメッセージ：${formData.message}`
             }]).then(() => {
                 /* メッセージ送信成功時の処理 */
                 alert('当日キャンセルは無いようにお願いいたします。キャンセル料発生いたします。');
