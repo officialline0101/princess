@@ -154,9 +154,9 @@
             <button type="button" id="repeatVisit" onclick="selectVisit(this)">オフなし</button> <!-- オフなしボタン -->
         </div>
 
-        <label>症状※必須</label> <!-- 症状のラベル -->
+        <label>コース</label> <!-- 症状のラベル -->
         <div class="symptoms">
-            <button type="button" onclick="selectSymptom(this)">デザインアートコース<br>(所要時間110分)<br>7800円</button> <!-- 症状ボタン -->
+            <button type="button" onclick="selectSymptom(this)">デザインアートコース(所要時間110分)<br>7800円</button> <!-- 症状ボタン -->
             <button type="button" onclick="selectSymptom(this)">交通事故施術</button> <!-- 症状ボタン -->
             <button type="button" onclick="selectSymptom(this)">肩こり・腕のしびれ</button> <!-- 症状ボタン -->
             <button type="button" onclick="selectSymptom(this)">臀部・下肢の痛みや痒れ</button> <!-- 症状ボタン -->
@@ -244,7 +244,7 @@
             // LINEトークにメッセージを送信
             liff.sendMessages([{
                 type: 'text',
-                text: `【予約フォーム】\nお名前：${formData.name}\n電話番号：${formData.phone}\n訪問回数：${formData.visitCount}\nメニュー：${formData.selectedSymptom}\n希望日時：\n ${formData.dates[0]}\n${formData.dates[1]}\n${formData.dates[2]}\nメッセージ：${formData.message}`
+                text: `【予約フォーム】\nお名前：${formData.name}\n電話番号：${formData.phone}\nメニュー：${formData.selectedSymptom}${formData.visitCount}\nネイル：${formData.visitCount}\n希望日時：\n ${formData.dates[0]}\n${formData.dates[1]}\n${formData.dates[2]}\nメッセージ：${formData.message}`
             }]).then(() => {
                 /* メッセージ送信成功時の処理 */
                 alert('当日キャンセルは無いようにお願いいたします。キャンセル料発生いたします。');
