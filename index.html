@@ -544,46 +544,17 @@ function updateCalendar(availability, businessDays) {
             if ((slotStart.getDay() === 0 || slotStart.getDay() === 6) && 
                 ((slotStart.getHours() === 19 && slotStart.getMinutes() >= 30) || 
                  (slotStart.getHours() === 20 || slotStart.getHours() === 21))) {
-                
-                if (isBusinessDay || businessEventTimes.length > 0) {
-                    const isBusinessEventTime = businessEventTimes.some(event => {
-                        return slotStart < event.end && event.start < slotEnd;
-                    });
-                    if (isBusinessEventTime) {
-                        cell.textContent = '◯';
-                        cell.classList.add('available');
-                    } else {
-                        cell.textContent = '✕';
-                        cell.classList.add('unavailable');
-                    }
-                } else {
-                    cell.textContent = '✕';
-                    cell.classList.add('unavailable');
-                }
-                continue;
+                cell.textContent = '✕';
+                cell.classList.add('unavailable');
+                continue; // この条件を満たしたら他の条件を確認しない
             }
-
             // 月火木金の09:30～17:30を×にする条件
             else if ((slotStart.getDay() === 1 || slotStart.getDay() === 2 || 
                       slotStart.getDay() === 4 || slotStart.getDay() === 5) && 
                      (slotStart.getHours() >= 9 && slotStart.getHours() < 18)) {
-                
-                if (isBusinessDay || businessEventTimes.length > 0) {
-                    const isBusinessEventTime = businessEventTimes.some(event => {
-                        return slotStart < event.end && event.start < slotEnd;
-                    });
-                    if (isBusinessEventTime) {
-                        cell.textContent = '◯';
-                        cell.classList.add('available');
-                    } else {
-                        cell.textContent = '✕';
-                        cell.classList.add('unavailable');
-                    }
-                } else {
-                    cell.textContent = '✕';
-                    cell.classList.add('unavailable');
-                }
-                continue;
+                cell.textContent = '✕';
+                cell.classList.add('unavailable');
+                continue; // この条件を満たしたら他の条件を確認しない
             }
             
             if (slotStart.getDay() === 3 && !isBusinessDay && businessEventTimes.length === 0) { // 日曜日の場合
