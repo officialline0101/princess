@@ -566,6 +566,11 @@ for (let i = 0; i < 7; i++) {
             cell.textContent = '◯';
             cell.classList.add('available');
         }
+        // 営業日で、指定されている時間以外の時間は×
+        else if (businessEventTimes.length > 0) {
+            cell.textContent = '✕';
+            cell.classList.add('unavailable');
+        }
         // 土日の19:30～21:00を×にする条件
         else if ((slotStart.getDay() === 0 || slotStart.getDay() === 6) && 
             ((slotStart.getHours() === 19 && slotStart.getMinutes() >= 30) || 
