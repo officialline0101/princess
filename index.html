@@ -513,10 +513,27 @@ function updateCalendar(availability, businessDays) {
         }
     }
 
+// 現在の日付を取得
+const today = new Date();
+// 2か月後の日付を取得
+const twoMonthsLater = new Date(today);
+twoMonthsLater.setMonth(today.getMonth() + 2);
+
 // テーブルの内容を更新
 for (let i = 0; i < 7; i++) {
     const day = new Date(currentDate);
     day.setDate(day.getDate() + i);
+
+    // 2か月後以降の日付の場合、全てのセルを「✕」にする
+    if (day >= twoMonthsLater) {
+        for (let j = 0; j < times.length; j++) {
+            const cell = table.rows[j].cells[i + 1];
+            cell.textContent = '✕';
+            cell.classList.add('unavailable');
+            cell.setAttribute('data-date', day.toISOString());
+        }
+        continue; // これ以降の処理をスキップ
+    }
 
     let businessEventTimes = []; // 営業日のイベント時間帯を記録する配列
 
@@ -607,38 +624,37 @@ for (let i = 0; i < 7; i++) {
         cell.setAttribute('data-date', slotStart.toISOString());
     }
 
-        // ×と×の間のセル数が3未満の場合、その間のセルを×にする
-        for (let j = 0; j < times.length - 1; j++) {
-            let start = -1;
-            let end = -1;
+    // ×と×の間のセル数が3未満の場合、その間のセルを×にする
+    for (let j = 0; j < times.length - 1; j++) {
+        let start = -1;
+        let end = -1;
 
-            // ×の開始位置を見つける
-            if (table.rows[j].cells[i + 1].textContent === '✕') {
-                start = j;
-            }
+        // ×の開始位置を見つける
+        if (table.rows[j].cells[i + 1].textContent === '✕') {
+            start = j;
+        }
 
-            // その次の×を見つける
-            for (let k = j + 1; k < times.length; k++) {
-                if (table.rows[k].cells[i + 1].textContent === '✕') {
-                    end = k;
-                    break;
-                }
+        // その次の×を見つける
+        for (let k = j + 1; k < times.length; k++) {
+            if (table.rows[k].cells[i + 1].textContent === '✕') {
+                end = k;
+                break;
             }
+        }
 
-            // ×と×の間のセル数が3未満の場合、その間のセルを×に変更
-            if (start !== -1 && end !== -1 && end - start < 4) {
-                for (let k = start + 1; k < end; k++) {
-                    const cell = table.rows[k].cells[i + 1];
-                    cell.textContent = '✕';
-                    cell.classList.remove('available');
-                    cell.classList.add('unavailable');
-                }
+        // ×と×の間のセル数が3未満の場合、その間のセルを×に変更
+        if (start !== -1 && end !== -1 && end - start < 4) {
+            for (let k = start + 1; k < end; k++) {
+                const cell = table.rows[k].cells[i + 1];
+                cell.textContent = '✕';
+                cell.classList.remove('available');
+                cell.classList.add('unavailable');
             }
+        }
 
-            // 次のループで位置を調整
-            if (end !== -1) {
-                j = end - 1; 
-            }
+        // 次のループで位置を調整
+        if (end !== -1) {
+            j = end - 1; 
         }
     }
 
@@ -659,6 +675,7 @@ for (let i = 0; i < 7; i++) {
             }
         }
     }
+}
     
         }
 
