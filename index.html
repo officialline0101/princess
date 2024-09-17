@@ -679,25 +679,24 @@ for (let i = 0; i < 7; i++) {
     
         }
 
-        function updateCalendarHeader(date) {
-            const headerRow = document.getElementById('calendar-header');
-            const headers = headerRow.querySelectorAll('th:not(:first-child)');
+function updateCalendarHeader(date) {
+    const headerRow = document.getElementById('calendar-header');
+    const headers = Array.from(headerRow.querySelectorAll('th:not(:first-child)'));  // 必ず配列に変換
+    const startDate = new Date(date);
 
-            const startDate = new Date(date);
+    headers.forEach((th, index) => {
+        const day = new Date(startDate);  // ループ内で必ず新しいDateオブジェクトを生成
+        day.setDate(startDate.getDate() + index);  // インデックスを基に正確に日付を進める
 
-            headers.forEach((th, index) => {
-                const day = new Date(startDate);
-                day.setDate(day.getDate() + index);
+        const dayOfWeek = ['日', '月', '火', '水', '木', '金', '土'];
+        const dayString = `${day.getDate()}(${dayOfWeek[day.getDay()]})`;
+        th.innerHTML = dayString.replace('(', '<br>(');  // 曜日を含む表示
+    });
 
-const dayOfWeek = ['日', '月', '火', '水', '木', '金', '土'];
-const dayString = `${day.getDate()}(${dayOfWeek[day.getDay()]})`;
-th.innerHTML = dayString.replace('(', '<br>(');
-            });
-
-            // 現在の月を表示
-            const currentMonthElement = document.getElementById('currentMonth');
-            currentMonthElement.textContent = `${startDate.getFullYear()}年 ${startDate.getMonth() + 1}月`;
-        }
+    // 現在の月を表示
+    const currentMonthElement = document.getElementById('currentMonth');
+    currentMonthElement.textContent = `${startDate.getFullYear()}年 ${startDate.getMonth() + 1}月`;
+}
 
         function nextWeek() {
             currentDate.setDate(currentDate.getDate() + 7);
