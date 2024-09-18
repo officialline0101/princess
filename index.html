@@ -507,14 +507,10 @@ const today = new Date();
 const twoMonthsLater = new Date(today);
 twoMonthsLater.setMonth(today.getMonth() + 2);
 
-// 現在の日付が何曜日か取得 (0が日曜日, 1が月曜日...)
-const startDay = currentDate.getDay(); // 現在の曜日を取得
-
 // テーブルの内容を更新
 for (let i = 0; i < 7; i++) {
     const day = new Date(currentDate);
-    // 現在の曜日に合わせて開始日を調整
-    day.setDate(day.getDate() - startDay + i);
+    day.setDate(day.getDate() + i);
 
     // 2か月後以降の日付の場合、全てのセルを「✕」にする
     if (day >= twoMonthsLater) {
