@@ -1154,7 +1154,7 @@
                     }
 
                     // 18時以降に終了する予約を不可にする (17:30は可)
-                    if (slotEnd.getHours() === 218 && slotEnd.getMinutes() > 0) {
+                    if (slotEnd.getHours() === 21 && slotEnd.getMinutes() > 0) {
                         cell.textContent = '✕';
                         cell.classList.add('unavailable');
                         continue;
