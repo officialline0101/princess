@@ -1154,12 +1154,20 @@
                     slotStart.setHours(parseInt(times[j].split(':')[0]), parseInt(times[j].split(':')[1]), 0, 0);
 
                     const slotEnd = new Date(slotStart);
-                    let menuDuration = selectedMenuTime || 10;
-                    let visitDuration = selectedVisitTime || 0;
-                    let irradiationsDuration = selectedirradiationsTime || 0;
+let menuDuration = selectedMenuTime || 10;
+let visitDuration = selectedVisitTime || 0;
+let irradiationsDuration = selectedirradiationsTime || 0;
 
-                    // メニュー時間と訪問回数の時間を合計して、終了時間を設定
-                    slotEnd.setMinutes(slotStart.getMinutes() + menuDuration + visitDuration + irradiationsDuration);
+// 営業日イベントには時間加算しないようにする
+const isCurrentSlotBusinessDay = availability.some(slot =>
+    new Date(slot.startTime).getTime() === slotStart.getTime() &&
+    slot.title === "営業日"
+);
+
+if (!isCurrentSlotBusinessDay) {
+    // メニュー時間と訪問回数の時間を合計して、終了時間を設定
+    slotEnd.setMinutes(slotStart.getMinutes() + menuDuration + visitDuration + irradiationsDuration);
+}
 
                     // 終了時間が翌日 (0時以降) になる場合は✕に設定
                     if (slotEnd.getDate() !== slotStart.getDate()) {
